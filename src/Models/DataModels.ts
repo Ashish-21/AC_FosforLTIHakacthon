@@ -4,6 +4,5 @@ export interface Comment {
   createdAt: Date;
   score: number;
   userId: string;
-  username: string;
-  replies: [];
+  userName: string;
 }
