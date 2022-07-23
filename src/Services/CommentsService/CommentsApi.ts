@@ -1,3 +1,5 @@
+import { CommentModel } from "../../Models/DataModels";
+
 export const getUserComments = async () => {
   return [
     {
@@ -42,4 +44,24 @@ export const getUserComments = async () => {
       userID: "12",
     },
   ];
+};
+
+export const createUserComment = async (
+  commentText: string,
+  parentId = null,
+  postID: string,
+  userName: string,
+  userID: string
+) => {
+  const comment: CommentModel = {
+    id: Math.random().toString(32).substring(2, 6),
+    commentText: commentText,
+    createdAt: new Date().toISOString(),
+    parentId: parentId,
+    score: 0,
+    postID: postID,
+    userName: userName,
+    userID: userID,
+  };
+  return comment;
 };

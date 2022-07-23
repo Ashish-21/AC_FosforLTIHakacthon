@@ -8,7 +8,6 @@ function CommentsPage() {
     <>
       <Container maxWidth="lg">
         <CommentList userID="12" postID="1" />
-        <CommentBox />
       </Container>
     </>
   );

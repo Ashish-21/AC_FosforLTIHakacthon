@@ -4,15 +4,27 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 
-function CommentBox() {
+interface OwnProps {
+  label?: string;
+  handleSubmit?: any;
+}
+
+function CommentBox({ label, handleSubmit }: OwnProps) {
   const [comment, setComment] = useState<string | undefined>();
   const commentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.currentTarget.value);
+  };
+
+  const commentSubmitHandler = (event: any) => {
+    event.preventDefault();
+    handleSubmit(comment);
+    setComment("");
   };
   return (
     <div>
       <Box
         component="form"
+        onSubmit={commentSubmitHandler}
         sx={{
           "& .MuiTextField-root": { m: 1, width: "90%" },
         }}
@@ -31,7 +43,13 @@ function CommentBox() {
             endAdornment: (
               <InputAdornment position="end">
                 <InputAdornment position="end">
-                  <Button variant="contained">Send</Button>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={comment?.length === 0}
+                  >
+                    {label}
+                  </Button>
                 </InputAdornment>
               </InputAdornment>
             ),

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import List from "@mui/material/List";
 import { CommentModel } from "../../Models/DataModels";
-import { getUserComments as getUserCommentsData } from "../../Services/CommentsService/CommentsApi";
+import {
+  getUserComments,
+  createUserComment,
+} from "../../Services/CommentsService/CommentsApi";
+import CommentBox from "./CommentBox";
 
 interface Ownprops {
   postID?: string;
@@ -10,12 +14,10 @@ interface Ownprops {
 }
 
 function CommentList({ postID, userID }: Ownprops) {
-  const [comments, setComments] = useState<CommentModel[]>([]);
   const [allCommentsData, setAllCommentsData] = useState<CommentModel[]>([]);
   useEffect(() => {
-    getUserCommentsData()
+    getUserComments()
       .then((data) => {
-        setComments(data.filter((c) => c.parentId === null));
         setAllCommentsData(data);
       })
       .catch((err) => {
@@ -33,11 +35,21 @@ function CommentList({ postID, userID }: Ownprops) {
       );
   };
 
+  const postComment = (com: string, parentId: string) => {
+    console.log(com, parentId);
+    createUserComment(com, null, "1", "Ashish", "12").then((data) =>
+      setAllCommentsData([data, ...allCommentsData])
+    );
+  };
+
   return (
     <>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-        {comments
-          .filter((c) => c.postID === postID && c.userID === userID)
+        {allCommentsData
+          .filter(
+            (c) =>
+              c.postID === postID && c.userID === userID && c.parentId === null
+          )
           .map((comment) => (
             <Comment
               commentData={comment}
@@ -46,6 +58,7 @@ function CommentList({ postID, userID }: Ownprops) {
             />
           ))}
       </List>
+      <CommentBox label="Send" handleSubmit={postComment} />
     </>
   );
 }
