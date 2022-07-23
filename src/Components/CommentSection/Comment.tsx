@@ -7,12 +7,18 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { CommentModel } from "../../Models/DataModels";
 import CommentActions from "./CommentActions";
+import CommentBox from "./CommentBox";
 
 interface OwnProps {
   commentData: CommentModel;
   replyComment: CommentModel[];
   userId?: string;
   deleteCommentHandler?: any;
+  postCommentHandler?: any;
+  addComment?: any;
+  setCurrentComment?: any;
+  parentId?: any;
+  currentComment?: any;
 }
 
 function Comment({
@@ -20,9 +26,23 @@ function Comment({
   replyComment,
   userId,
   deleteCommentHandler,
+  currentComment,
+  postCommentHandler,
+  parentId = null,
+  setCurrentComment,
 }: OwnProps) {
   const canEditORDelete = commentData.userID === userId;
   const canReply = Boolean(userId);
+  const modeOfReplyAction =
+    currentComment &&
+    currentComment.id === commentData.id &&
+    currentComment.mode === "reply";
+  const modeOfEditAction =
+    currentComment &&
+    currentComment.id === commentData.id &&
+    currentComment.mode === "edit";
+  const replyId = parentId ? parentId : commentData.id;
+
   return (
     <div>
       <ListItem
@@ -52,9 +72,19 @@ function Comment({
           isReply={canReply}
           commentId={commentData.id}
           deleteCommentHandler={deleteCommentHandler}
+          setCurrentComment={setCurrentComment}
         />
       </ListItem>
       <Divider />
+      {modeOfReplyAction ? (
+        <CommentBox
+          handleSubmit={(text: string) => postCommentHandler(text, replyId)}
+          label="Reply"
+        />
+      ) : null}
+      {modeOfEditAction ? (
+        <CommentBox handleSubmit={postCommentHandler} label="Edit" />
+      ) : null}
       {replyComment.length > 0
         ? replyComment.map((replyCom) => (
             <Comment
@@ -62,6 +92,11 @@ function Comment({
               replyComment={[]}
               key={replyCom.id}
               userId={userId}
+              parentId={replyCom.parentId}
+              currentComment={currentComment}
+              setCurrentComment={setCurrentComment}
+              postCommentHandler={postCommentHandler}
+              deleteCommentHandler={deleteCommentHandler}
             />
           ))
         : null}

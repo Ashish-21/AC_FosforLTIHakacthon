@@ -48,10 +48,11 @@ export const getUserComments = async () => {
 
 export const createUserComment = async (
   commentText: string,
-  parentId = null,
+  parentId: any,
   postID: string,
   userName: string,
-  userID: string
+  userID: string,
+  isReply: boolean
 ) => {
   const comment: CommentModel = {
     id: Math.random().toString(32).substring(2, 6),
@@ -62,6 +63,7 @@ export const createUserComment = async (
     postID: postID,
     userName: userName,
     userID: userID,
+    isReply: isReply,
   };
   return comment;
 };

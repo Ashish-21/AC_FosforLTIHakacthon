@@ -8,6 +8,7 @@ interface OwnProps {
   editCommentHandler?: any;
   replyCommentHandler?: any;
   commentId?: string;
+  setCurrentComment?: any;
 }
 
 function CommentActions({
@@ -15,11 +16,26 @@ function CommentActions({
   isReply,
   deleteCommentHandler,
   commentId,
+  setCurrentComment,
 }: OwnProps) {
   return (
     <>
-      {isReply ? <Button variant="contained">Reply</Button> : null}
-      {canEditORDelete ? <Button variant="text">Edit</Button> : null}
+      {isReply ? (
+        <Button
+          variant="contained"
+          onClick={() => setCurrentComment({ id: commentId, mode: "reply" })}
+        >
+          Reply
+        </Button>
+      ) : null}
+      {canEditORDelete ? (
+        <Button
+          variant="text"
+          onClick={() => setCurrentComment({ id: commentId, mode: "edit" })}
+        >
+          Edit
+        </Button>
+      ) : null}
       {canEditORDelete ? (
         <Button variant="text" onClick={() => deleteCommentHandler(commentId)}>
           Delete

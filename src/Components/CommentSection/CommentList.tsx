@@ -15,6 +15,7 @@ interface Ownprops {
 
 function CommentList({ postID, userID }: Ownprops) {
   const [allCommentsData, setAllCommentsData] = useState<CommentModel[]>([]);
+  const [currentComment, setCurrentCommment] = useState(null);
   useEffect(() => {
     getUserComments()
       .then((data) => {
@@ -36,9 +37,12 @@ function CommentList({ postID, userID }: Ownprops) {
   };
 
   const postComment = (com: string, parentId: string) => {
-    console.log(com, parentId);
-    createUserComment(com, null, "1", "Ashish", "12").then((data) =>
-      setAllCommentsData([data, ...allCommentsData])
+    const isReplyComment = parentId === null ? false : true;
+    createUserComment(com, parentId, "1", "Ashish", "12", isReplyComment).then(
+      (data) => {
+        setAllCommentsData([data, ...allCommentsData]);
+        setCurrentCommment(null);
+      }
     );
   };
 
@@ -62,6 +66,9 @@ function CommentList({ postID, userID }: Ownprops) {
               replyComment={getReplyForComment(comment.id)}
               userId={userID}
               deleteCommentHandler={deleteComment}
+              setCurrentComment={setCurrentCommment}
+              postCommentHandler={postComment}
+              currentComment={currentComment}
             />
           ))}
       </List>
