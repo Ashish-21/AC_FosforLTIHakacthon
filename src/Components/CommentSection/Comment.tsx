@@ -18,6 +18,7 @@ interface CommentStyles {
   userNameContainer?: BoxProps;
   currentUserTypography?: TypographyProps;
   userNameBox?: BoxProps;
+  dateTypography?: TypographyProps;
 }
 
 const commentStyles: CommentStyles = {
@@ -47,6 +48,11 @@ const commentStyles: CommentStyles = {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
+    },
+  },
+  dateTypography: {
+    sx: {
+      marginLeft: "8px",
     },
   },
   currentUserTypography: {
@@ -127,6 +133,11 @@ function Comment({
                   {canEditORDelete ? (
                     <Typography {...styles.currentUserTypography}>
                       You
+                    </Typography>
+                  ) : null}
+                  {commentData.createdAt ? (
+                    <Typography {...styles.dateTypography} paddingBottom={1}>
+                      {new Date(commentData.createdAt).toLocaleDateString()}
                     </Typography>
                   ) : null}
                 </Box>

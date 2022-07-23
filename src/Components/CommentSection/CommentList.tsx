@@ -14,17 +14,31 @@ interface Ownprops {
 }
 
 function CommentList({ postID, userID }: Ownprops) {
-  const [allCommentsData, setAllCommentsData] = useState<CommentModel[]>([]);
+  const intialData = localStorage.getItem("MyData")
+    ? JSON.parse(localStorage.getItem("MyData") || "{}")
+    : [];
+
+  const [allCommentsData, setAllCommentsData] =
+    useState<CommentModel[]>(intialData);
+
   const [currentComment, setCurrentCommment] = useState(null);
+
   useEffect(() => {
-    getUserComments()
-      .then((data) => {
-        setAllCommentsData(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (intialData && !intialData.length) {
+      getUserComments()
+        .then((data) => {
+          setAllCommentsData(data);
+          window.localStorage.setItem("MyData", JSON.stringify(data));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("MyData", JSON.stringify(allCommentsData));
+  }, [allCommentsData]);
 
   const getReplyForComment = (commentId: string) => {
     return allCommentsData
@@ -49,8 +63,6 @@ function CommentList({ postID, userID }: Ownprops) {
     );
   };
 
-  console.log(allCommentsData);
-
   const deleteComment = (comId: string) => {
     const deleteCommentData = allCommentsData.filter((com) => com.id !== comId);
     setAllCommentsData(deleteCommentData);
@@ -70,21 +82,23 @@ function CommentList({ postID, userID }: Ownprops) {
   return (
     <>
       <List sx={{ width: "100%" }}>
-        {allCommentsData
-          .filter((c) => c.postID === postID && c.parentId === null)
-          .map((comment) => (
-            <Comment
-              commentData={comment}
-              key={comment.id}
-              replyComment={getReplyForComment(comment.id)}
-              userId={userID}
-              deleteCommentHandler={deleteComment}
-              setCurrentComment={setCurrentCommment}
-              postCommentHandler={postComment}
-              currentComment={currentComment}
-              updateCommentHandler={updateComment}
-            />
-          ))}
+        {allCommentsData && allCommentsData.length
+          ? allCommentsData
+              .filter((c) => c.postID === postID && c.parentId === null)
+              .map((comment) => (
+                <Comment
+                  commentData={comment}
+                  key={comment.id}
+                  replyComment={getReplyForComment(comment.id)}
+                  userId={userID}
+                  deleteCommentHandler={deleteComment}
+                  setCurrentComment={setCurrentCommment}
+                  postCommentHandler={postComment}
+                  currentComment={currentComment}
+                  updateCommentHandler={updateComment}
+                />
+              ))
+          : null}
       </List>
       <CommentBox label="Send" handleSubmit={postComment} />
     </>
