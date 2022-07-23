@@ -53,6 +53,7 @@ const commentStyles: CommentStyles = {
   dateTypography: {
     sx: {
       marginLeft: "8px",
+      marginRight: "10px",
     },
   },
   currentUserTypography: {
