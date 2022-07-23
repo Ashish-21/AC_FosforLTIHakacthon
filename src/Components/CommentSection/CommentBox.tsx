@@ -37,6 +37,7 @@ function CommentBox({
         sx={{
           "& .MuiTextField-root": { width: "100%" },
           width: "100%",
+          marginBottom: "14px",
         }}
         noValidate
         autoComplete="off"
