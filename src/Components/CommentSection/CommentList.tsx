@@ -64,12 +64,9 @@ function CommentList({ postID, userID }: Ownprops) {
 
   return (
     <>
-      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+      <List sx={{ width: "100%" }}>
         {allCommentsData
-          .filter(
-            (c) =>
-              c.postID === postID && c.userID === userID && c.parentId === null
-          )
+          .filter((c) => c.postID === postID && c.parentId === null)
           .map((comment) => (
             <Comment
               commentData={comment}

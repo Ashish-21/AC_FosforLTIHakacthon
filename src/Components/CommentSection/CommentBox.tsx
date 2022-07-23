@@ -35,7 +35,7 @@ function CommentBox({
         component="form"
         onSubmit={commentSubmitHandler}
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "90%" },
+          "& .MuiTextField-root": { width: "100%" },
         }}
         noValidate
         autoComplete="off"
@@ -48,6 +48,7 @@ function CommentBox({
           value={comment}
           onChange={commentHandler}
           required={true}
+          sx={{ background: "#fff" }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

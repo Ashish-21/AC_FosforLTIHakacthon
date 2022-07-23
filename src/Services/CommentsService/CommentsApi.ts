@@ -4,22 +4,24 @@ export const getUserComments = async () => {
   return [
     {
       id: "1",
-      commentText: "First Comment",
+      commentText:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras placerat dolor nec efficitur egestas. Sed suscipit lectus quis vehicula fringilla. In hac habitasse platea dictumst. Vivamus tincidunt purus justo. Maecenas accumsan dolor a elit placerat aliquet. Aliquam sollicitudin ut elit quis lacinia. Nam varius sapien tellus, ut fermentum augue semper quis.",
       createdAt: "2022-07-23T10:10:42.619Z",
       score: 5,
       postID: "1",
       parentId: null,
       userID: "12",
-      userName: "Ashish",
+      userName: "Patrick E. Wiggins",
     },
     {
       id: "2",
-      commentText: "Second Comment",
+      commentText:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras placerat dolor nec efficitur egestas. Sed suscipit lectus quis vehicula fringilla. In hac habitasse platea dictumst. Vivamus tincidunt purus justo. Maecenas accumsan dolor a elit placerat aliquet. Aliquam sollicitudin ut elit quis lacinia. Nam varius sapien tellus, ut fermentum augue semper quis.",
       createdAt: "2022-07-23T10:10:42.619Z",
       score: 5,
       postID: "1",
       parentId: null,
-      userName: "Ashish",
+      userName: "Sandra A. Lamb",
       userID: "12",
     },
     {

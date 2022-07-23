@@ -1,5 +1,5 @@
 import React from "react";
-import ListItem from "@mui/material/ListItem";
+import ListItem, { ListItemProps } from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -8,6 +8,20 @@ import Typography from "@mui/material/Typography";
 import { CommentModel } from "../../Models/DataModels";
 import CommentActions from "./CommentActions";
 import CommentBox from "./CommentBox";
+
+interface CommentStyles {
+  listItemStyles?: ListItemProps;
+}
+
+const commentStyles: CommentStyles = {
+  listItemStyles: {
+    sx: {
+      marginBottom: "24px",
+      background: "#fff",
+      padding: "28px 20px",
+    },
+  },
+};
 
 interface OwnProps {
   commentData: CommentModel;
@@ -21,6 +35,7 @@ interface OwnProps {
   currentComment?: any;
 }
 
+const styles = commentStyles;
 function Comment({
   commentData,
   replyComment,
@@ -48,23 +63,33 @@ function Comment({
     <div>
       <ListItem
         alignItems="flex-start"
-        sx={{ paddingLeft: commentData.isReply ? "50px" : "0px" }}
+        sx={{
+          ...styles.listItemStyles?.sx,
+          marginLeft: commentData.isReply ? "5%" : "unset",
+          width: commentData.isReply ? "95%" : "100%",
+        }}
       >
         <ListItemAvatar>
           <Avatar>{commentData.userName?.substring(0, 1)}</Avatar>
         </ListItemAvatar>
 
         <ListItemText
-          primary={commentData.userName}
+          primary={
+            <React.Fragment>
+              <Typography
+                variant="body1"
+                color="text.primary"
+                fontWeight="bold"
+                paddingBottom={1}
+              >
+                {commentData.userName}
+              </Typography>
+            </React.Fragment>
+          }
           secondary={
             <React.Fragment>
               {!modeOfEditAction ? (
-                <Typography
-                  sx={{ display: "inline" }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                >
+                <Typography variant="body2" color="text.secondary">
                   {commentData.commentText}
                 </Typography>
               ) : null}
@@ -79,7 +104,6 @@ function Comment({
           setCurrentComment={setCurrentComment}
         />
       </ListItem>
-      <Divider />
       {modeOfReplyAction ? (
         <CommentBox
           handleSubmit={(text: string) => postCommentHandler(text, replyId)}
