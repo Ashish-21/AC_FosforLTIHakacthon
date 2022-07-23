@@ -42,6 +42,11 @@ function CommentList({ postID, userID }: Ownprops) {
     );
   };
 
+  const deleteComment = (comId: string) => {
+    const deleteCommentData = allCommentsData.filter((com) => com.id !== comId);
+    setAllCommentsData(deleteCommentData);
+  };
+
   return (
     <>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
@@ -55,6 +60,8 @@ function CommentList({ postID, userID }: Ownprops) {
               commentData={comment}
               key={comment.id}
               replyComment={getReplyForComment(comment.id)}
+              userId={userID}
+              deleteCommentHandler={deleteComment}
             />
           ))}
       </List>

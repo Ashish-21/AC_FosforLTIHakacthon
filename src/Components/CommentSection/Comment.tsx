@@ -6,13 +6,23 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { CommentModel } from "../../Models/DataModels";
+import CommentActions from "./CommentActions";
 
 interface OwnProps {
   commentData: CommentModel;
   replyComment: CommentModel[];
+  userId?: string;
+  deleteCommentHandler?: any;
 }
 
-function Comment({ commentData, replyComment }: OwnProps) {
+function Comment({
+  commentData,
+  replyComment,
+  userId,
+  deleteCommentHandler,
+}: OwnProps) {
+  const canEditORDelete = commentData.userID === userId;
+  const canReply = Boolean(userId);
   return (
     <div>
       <ListItem
@@ -37,13 +47,21 @@ function Comment({ commentData, replyComment }: OwnProps) {
             </React.Fragment>
           }
         />
+        <CommentActions
+          canEditORDelete={canEditORDelete}
+          isReply={canReply}
+          commentId={commentData.id}
+          deleteCommentHandler={deleteCommentHandler}
+        />
       </ListItem>
+      <Divider />
       {replyComment.length > 0
         ? replyComment.map((replyCom) => (
             <Comment
               commentData={replyCom}
               replyComment={[]}
               key={replyCom.id}
+              userId={userId}
             />
           ))
         : null}
