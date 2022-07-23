@@ -17,3 +17,7 @@ comment.
 
 React with Typescript
 Material UI
+
+# High Level Diagram
+
+Please find DFD for interactive comments in Repo with File Named as "DFD.png" on root level of REPO
