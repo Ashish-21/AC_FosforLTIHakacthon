@@ -1,8 +1,9 @@
-export interface Comment {
+export interface CommentModel {
   id: string;
   commentText: string;
-  createdAt: Date;
+  createdAt: string;
   score: number;
-  userId: string;
+  postID: string;
   userName: string;
+  userID: string;
 }

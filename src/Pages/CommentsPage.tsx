@@ -7,7 +7,7 @@ function CommentsPage() {
   return (
     <>
       <Container maxWidth="lg">
-        <CommentList />
+        <CommentList userID="12" postID="1" />
         <CommentBox />
       </Container>
     </>
