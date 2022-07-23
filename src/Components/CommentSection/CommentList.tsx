@@ -51,6 +51,17 @@ function CommentList({ postID, userID }: Ownprops) {
     setAllCommentsData(deleteCommentData);
   };
 
+  const updateComment = (text: string, comId: string) => {
+    const updateComment = allCommentsData.map((com) => {
+      if (comId === com.id) {
+        return { ...com, commentText: text };
+      }
+      return com;
+    });
+    setAllCommentsData(updateComment);
+    setCurrentCommment(null);
+  };
+
   return (
     <>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
@@ -69,6 +80,7 @@ function CommentList({ postID, userID }: Ownprops) {
               setCurrentComment={setCurrentCommment}
               postCommentHandler={postComment}
               currentComment={currentComment}
+              updateCommentHandler={updateComment}
             />
           ))}
       </List>

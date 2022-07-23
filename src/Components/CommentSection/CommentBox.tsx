@@ -7,10 +7,19 @@ import Button from "@mui/material/Button";
 interface OwnProps {
   label?: string;
   handleSubmit?: any;
+  commentText?: string;
+  cancelButtonHandler?: any;
+  cancelButton?: boolean;
 }
 
-function CommentBox({ label, handleSubmit }: OwnProps) {
-  const [comment, setComment] = useState<string | undefined>();
+function CommentBox({
+  label,
+  handleSubmit,
+  commentText = "",
+  cancelButton = false,
+  cancelButtonHandler,
+}: OwnProps) {
+  const [comment, setComment] = useState<string | undefined>(commentText);
   const commentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.currentTarget.value);
   };
@@ -47,9 +56,19 @@ function CommentBox({ label, handleSubmit }: OwnProps) {
                     variant="contained"
                     type="submit"
                     disabled={comment?.length === 0}
+                    sx={{ marginRight: "10px" }}
                   >
                     {label}
                   </Button>
+                  {cancelButton ? (
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      onClick={cancelButtonHandler}
+                    >
+                      Cancel
+                    </Button>
+                  ) : null}
                 </InputAdornment>
               </InputAdornment>
             ),
