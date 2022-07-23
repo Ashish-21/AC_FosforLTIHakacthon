@@ -26,6 +26,7 @@ const commentStyles: CommentStyles = {
       marginBottom: "24px",
       background: "#fff",
       padding: "28px 20px",
+      borderRadius: "14px",
     },
   },
   commentActionContainer: {

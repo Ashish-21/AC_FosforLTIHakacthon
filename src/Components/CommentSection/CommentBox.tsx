@@ -36,6 +36,7 @@ function CommentBox({
         onSubmit={commentSubmitHandler}
         sx={{
           "& .MuiTextField-root": { width: "100%" },
+          width: "100%",
         }}
         noValidate
         autoComplete="off"
@@ -52,7 +53,10 @@ function CommentBox({
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <InputAdornment position="end">
+                <InputAdornment
+                  position="end"
+                  sx={{ alignItems: "flex-start" }}
+                >
                   <Button
                     variant="contained"
                     type="submit"

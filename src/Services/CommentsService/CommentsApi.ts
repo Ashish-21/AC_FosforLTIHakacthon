@@ -26,12 +26,13 @@ export const getUserComments = async () => {
     },
     {
       id: "3",
-      commentText: "Reply Comment",
+      commentText:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit-Reply",
       createdAt: "2022-07-23T10:10:42.619Z",
       score: 5,
       postID: "1",
       parentId: "1",
-      userName: "Rahul",
+      userName: "Ashish",
       userID: "12",
       isReply: true,
     },
@@ -51,12 +52,13 @@ export const getUserComments = async () => {
 
 export const createUserComment = async (
   commentText: string,
-  parentId: any,
+  parentId = null,
   postID: string,
   userName: string,
   userID: string,
-  isReply: boolean
+  isReply = false
 ) => {
+  console.log(isReply);
   const comment: CommentModel = {
     id: Math.random().toString(32).substring(2, 6),
     commentText: commentText,

@@ -36,15 +36,20 @@ function CommentList({ postID, userID }: Ownprops) {
       );
   };
 
-  const postComment = (com: string, parentId: string) => {
+  const postComment = (com: string, parentId = null) => {
+    console.log(parentId);
     const isReplyComment = parentId === null ? false : true;
+    console.log(com);
     createUserComment(com, parentId, "1", "Ashish", "12", isReplyComment).then(
       (data) => {
         setAllCommentsData([data, ...allCommentsData]);
+        console.log(data);
         setCurrentCommment(null);
       }
     );
   };
+
+  console.log(allCommentsData);
 
   const deleteComment = (comId: string) => {
     const deleteCommentData = allCommentsData.filter((com) => com.id !== comId);
