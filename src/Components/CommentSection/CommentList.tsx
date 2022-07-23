@@ -11,15 +11,28 @@ interface Ownprops {
 
 function CommentList({ postID, userID }: Ownprops) {
   const [comments, setComments] = useState<CommentModel[]>([]);
+  const [allCommentsData, setAllCommentsData] = useState<CommentModel[]>([]);
   useEffect(() => {
     getUserCommentsData()
       .then((data) => {
-        setComments(data);
+        setComments(data.filter((c) => c.parentId === null));
+        setAllCommentsData(data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const getReplyForComment = (commentId: string) => {
+    return allCommentsData
+      .filter((com) => com.parentId === commentId && com.postID === postID)
+      .sort(
+        (coma, comb) =>
+          new Date(coma.createdAt).getTime() -
+          new Date(comb.createdAt).getTime()
+      );
+  };
+
   return (
     <>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
@@ -27,9 +40,9 @@ function CommentList({ postID, userID }: Ownprops) {
           .filter((c) => c.postID === postID && c.userID === userID)
           .map((comment) => (
             <Comment
+              commentData={comment}
               key={comment.id}
-              userName={comment.userName}
-              commentText={comment.commentText}
+              replyComment={getReplyForComment(comment.id)}
             />
           ))}
       </List>
