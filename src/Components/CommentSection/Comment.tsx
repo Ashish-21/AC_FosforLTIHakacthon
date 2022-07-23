@@ -119,9 +119,9 @@ function Comment({
 
         <ListItemText
           primary={
-            <React.Fragment>
-              <Box {...styles.userNameBox}>
-                <Box {...styles.userNameContainer}>
+            <div>
+              <Box {...styles.userNameBox} component="div">
+                <Box {...styles.userNameContainer} component="div">
                   <Typography
                     variant="body1"
                     color="text.primary"
@@ -153,12 +153,16 @@ function Comment({
                   </Button>
                 ) : null}
               </Box>
-            </React.Fragment>
+            </div>
           }
           secondary={
-            <React.Fragment>
+            <div>
               {!modeOfEditAction ? (
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  component="span"
+                >
                   {commentData.commentText}
                 </Typography>
               ) : null}
@@ -173,7 +177,7 @@ function Comment({
                   />
                 </Box>
               ) : null}
-            </React.Fragment>
+            </div>
           }
         />
       </ListItem>

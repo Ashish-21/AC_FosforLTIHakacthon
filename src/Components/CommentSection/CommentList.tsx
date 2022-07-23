@@ -14,9 +14,12 @@ interface Ownprops {
 }
 
 function CommentList({ postID, userID }: Ownprops) {
-  const intialData = localStorage.getItem("MyData")
-    ? JSON.parse(localStorage.getItem("MyData") || "{}")
-    : [];
+  const data =
+    localStorage.getItem("MyData") === undefined
+      ? "{}"
+      : localStorage.getItem("MyData");
+  const intialData =
+    data && data !== "undefined" ? JSON.parse(data || "{}") : [];
 
   const [allCommentsData, setAllCommentsData] =
     useState<CommentModel[]>(intialData);
@@ -27,6 +30,7 @@ function CommentList({ postID, userID }: Ownprops) {
     if (intialData && !intialData.length) {
       getUserComments()
         .then((data) => {
+          console.log(data);
           setAllCommentsData(data);
           window.localStorage.setItem("MyData", JSON.stringify(data));
         })
