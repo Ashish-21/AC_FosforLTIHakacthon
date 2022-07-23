@@ -11,7 +11,7 @@ export const getUserComments = async () => {
       postID: "1",
       parentId: null,
       userID: "12",
-      userName: "Patrick E. Wiggins",
+      userName: "Ashish",
     },
     {
       id: "2",
@@ -22,7 +22,7 @@ export const getUserComments = async () => {
       postID: "1",
       parentId: null,
       userName: "Sandra A. Lamb",
-      userID: "12",
+      userID: "122",
     },
     {
       id: "3",
@@ -32,18 +32,19 @@ export const getUserComments = async () => {
       postID: "1",
       parentId: "1",
       userName: "Rahul",
-      userID: "24",
+      userID: "12",
       isReply: true,
     },
     {
       id: "4",
-      commentText: "Third  Comment",
+      commentText:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras placerat dolor nec efficitur egestas. Sed suscipit lectus quis vehicula fringilla. In hac habitasse platea dictumst. Vivamus tincidunt purus justo. Maecenas accumsan dolor a elit placerat aliquet. Aliquam sollicitudin ut elit quis lacinia. Nam varius sapien tellus, ut fermentum augue semper quis.",
       createdAt: "2022-07-23T10:10:42.619Z",
       score: 5,
       postID: "1",
       parentId: null,
-      userName: "Ashish",
-      userID: "12",
+      userName: "Pattrick E. Wiggins",
+      userID: "123",
     },
   ];
 };

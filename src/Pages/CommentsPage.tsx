@@ -9,7 +9,7 @@ interface CommentsPageStyles {
 const commentsPageStyles: CommentsPageStyles = {
   containerStyles: {
     sx: {
-      padding: "150px 0px",
+      padding: "60px 0px",
       background: "#eeeeee",
     },
   },

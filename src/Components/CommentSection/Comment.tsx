@@ -1,16 +1,23 @@
 import React from "react";
 import ListItem, { ListItemProps } from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
+import Typography, { TypographyProps } from "@mui/material/Typography";
 import { CommentModel } from "../../Models/DataModels";
 import CommentActions from "./CommentActions";
 import CommentBox from "./CommentBox";
+import Box from "@mui/material/Box";
+import { BoxProps } from "@mui/system";
+import Button from "@mui/material/Button";
+import ReplyIcon from "@mui/icons-material/Reply";
 
 interface CommentStyles {
   listItemStyles?: ListItemProps;
+  commentActionContainer?: BoxProps;
+  userNameContainer?: BoxProps;
+  currentUserTypography?: TypographyProps;
+  userNameBox?: BoxProps;
 }
 
 const commentStyles: CommentStyles = {
@@ -19,6 +26,36 @@ const commentStyles: CommentStyles = {
       marginBottom: "24px",
       background: "#fff",
       padding: "28px 20px",
+    },
+  },
+  commentActionContainer: {
+    sx: {
+      padding: "12px 0px",
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+  },
+  userNameContainer: {
+    sx: {
+      display: "flex",
+      alignItems: "center",
+    },
+  },
+  userNameBox: {
+    sx: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+  },
+  currentUserTypography: {
+    sx: {
+      background: "#1976d2",
+      color: "#fff",
+      borderRadius: "8px",
+      padding: "4px 10px",
+      marginLeft: "12px",
+      marginBottom: "14px",
     },
   },
 };
@@ -76,14 +113,34 @@ function Comment({
         <ListItemText
           primary={
             <React.Fragment>
-              <Typography
-                variant="body1"
-                color="text.primary"
-                fontWeight="bold"
-                paddingBottom={1}
-              >
-                {commentData.userName}
-              </Typography>
+              <Box {...styles.userNameBox}>
+                <Box {...styles.userNameContainer}>
+                  <Typography
+                    variant="body1"
+                    color="text.primary"
+                    fontWeight="bold"
+                    paddingBottom={1}
+                  >
+                    {commentData.userName}
+                  </Typography>
+                  {canEditORDelete ? (
+                    <Typography {...styles.currentUserTypography}>
+                      You
+                    </Typography>
+                  ) : null}
+                </Box>
+                {canReply ? (
+                  <Button
+                    variant="text"
+                    startIcon={<ReplyIcon />}
+                    onClick={() =>
+                      setCurrentComment({ id: commentData.id, mode: "reply" })
+                    }
+                  >
+                    Reply
+                  </Button>
+                ) : null}
+              </Box>
             </React.Fragment>
           }
           secondary={
@@ -93,15 +150,19 @@ function Comment({
                   {commentData.commentText}
                 </Typography>
               ) : null}
+              {canEditORDelete ? (
+                <Box {...styles.commentActionContainer}>
+                  <CommentActions
+                    canEditORDelete={canEditORDelete}
+                    isReply={canReply}
+                    commentId={commentData.id}
+                    deleteCommentHandler={deleteCommentHandler}
+                    setCurrentComment={setCurrentComment}
+                  />
+                </Box>
+              ) : null}
             </React.Fragment>
           }
-        />
-        <CommentActions
-          canEditORDelete={canEditORDelete}
-          isReply={canReply}
-          commentId={commentData.id}
-          deleteCommentHandler={deleteCommentHandler}
-          setCurrentComment={setCurrentComment}
         />
       </ListItem>
       {modeOfReplyAction ? (

@@ -1,5 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface OwnProps {
   canEditORDelete: boolean;
@@ -20,25 +22,23 @@ function CommentActions({
 }: OwnProps) {
   return (
     <>
-      {isReply ? (
+      {canEditORDelete ? (
         <Button
-          variant="contained"
-          onClick={() => setCurrentComment({ id: commentId, mode: "reply" })}
+          variant="text"
+          onClick={() => deleteCommentHandler(commentId)}
+          startIcon={<DeleteIcon />}
+          color="error"
         >
-          Reply
+          Delete
         </Button>
       ) : null}
       {canEditORDelete ? (
         <Button
           variant="text"
           onClick={() => setCurrentComment({ id: commentId, mode: "edit" })}
+          startIcon={<EditIcon />}
         >
           Edit
-        </Button>
-      ) : null}
-      {canEditORDelete ? (
-        <Button variant="text" onClick={() => deleteCommentHandler(commentId)}>
-          Delete
         </Button>
       ) : null}
     </>
