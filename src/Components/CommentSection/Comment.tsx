@@ -11,6 +11,8 @@ import Box from "@mui/material/Box";
 import { BoxProps } from "@mui/system";
 import Button from "@mui/material/Button";
 import ReplyIcon from "@mui/icons-material/Reply";
+import { formatDistanceToNowStrict, format } from "date-fns";
+import { differenceInDays } from "date-fns/esm";
 
 interface CommentStyles {
   listItemStyles?: ListItemProps;
@@ -138,7 +140,20 @@ function Comment({
                   ) : null}
                   {commentData.createdAt ? (
                     <Typography {...styles.dateTypography} paddingBottom={1}>
-                      {new Date(commentData.createdAt).toLocaleDateString()}
+                      {differenceInDays(
+                        new Date(),
+                        new Date(commentData.createdAt)
+                      ) > 1
+                        ? format(
+                            new Date(commentData.createdAt),
+                            "MMM dd, yyyy"
+                          )
+                        : formatDistanceToNowStrict(
+                            new Date(commentData.createdAt),
+                            {
+                              addSuffix: true,
+                            }
+                          )}
                     </Typography>
                   ) : null}
                 </Box>
